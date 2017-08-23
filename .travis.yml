@@ -1,0 +1,12 @@
+language: node_js
+before_install:
+- npm install -g npm@latest
+node_js:
+- '8'
+script: npm run build:prod
+deploy:
+  provider: heroku
+  skip_cleanup: true
+  app: white-board-react
+  api_key:
+    secure: nTb4DeOFucBSS1rqnfJrrGbLhszlrWeZgy3YdmKNlOx3h5ug6sKAlXUdfg2GJXJ8QcSd4TE5FbWxRDgF4Y5KvLJiN00o7SNL1PF+HwaGz24J93J/sqiDiRC9E+5TNAvs6Gdv1Jsi3cqbzGmOqlvvqkvy8yWRBWsfTho1zPLvXm04Ymyor2gQVFXimq1UPE4sVMfDi03JqqFhF99HY4ldNStqT9TkkoUs0VxTuskInVx5toEPHrqcXupzQ/dO3dazR2UytSUBFMYBtd3izynIOJ6fS+GX8fM8ndTOwRf/78Pnjnp3PaDYNK5ckj9YMHGkuG2lWmGJEbiKLfCrRY87k7LpYx06/jOtGr/6oL2ks2DUPCPW9bzMRCFRwH/MVOfdZvPee402EjqvnBudhzzC5nxfbEZC14wRD4We2BgbEMkRZY8sX5OAEuTHDrssqG4wwqn6bD74JW79wQZStkTLNo90BuZYXN4y+IhS/qRnCzR4oqanYFupdysPHdRsOUs7RHUcRFri4ih4Xdbp6jYDTT5Jr/niFN2EOAMM6GTgP0k+exIaSCkUZijwEr1W/Ep8jULIiOuisYo+SEW7O3/UHEo4e+pNC7wSZ58xcTrzBVx9l0U/cJpHi4UlhaUl2Cp6DQkSXoAZlsXY9HQz2lCxOSoke56kg4cJslcwuw+m2kY=
