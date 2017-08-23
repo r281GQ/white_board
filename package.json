@@ -1,0 +1,19 @@
+{
+  "name": "white_board",
+  "version": "1.0.0",
+  "description": "white board project manager",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r281GQ/white_board.git"
+  },
+  "author": "Endre Vegh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/r281GQ/white_board/issues"
+  },
+  "homepage": "https://github.com/r281GQ/white_board#readme"
+}
