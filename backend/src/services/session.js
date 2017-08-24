@@ -26,7 +26,7 @@ module.exports = app => {
     cookie: {
       httpOnly: true,
       maxAge: 60 * 60 * 1000,
-      secure: true
+      secure: false
     },
     secret: config.cookie_secret,
     store: new redisStore(store),
