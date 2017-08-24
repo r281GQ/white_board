@@ -43,7 +43,7 @@ module.exports = app => {
   }
 
   app.use(session(sessionConfig));
-  return store;
+  return sessionConfig.store;
   // return process.env.NODE_ENV !== 'production'
   //   ? new redisStore({
   //       url: process.env.REDISTOGO_URL,
