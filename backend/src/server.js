@@ -22,7 +22,7 @@ require('./services/passport');
 require('./services/mongoose');
 
 require('./routes/auth')(app)(passport);
-require('./routes/static')(app);
+require('./routes/static')(app)(express);
 
 require('./websockets/socket')(app)(store).listen(PORT, () =>
   console.log(`Rest API and websockets started on port: ${PORT}`)
