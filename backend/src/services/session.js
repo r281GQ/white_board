@@ -28,4 +28,14 @@ module.exports = app => {
   }
 
   app.use(session(sessionConfig));
+
+  return process.env.NODE_ENV !== 'production'
+    ? new redisStore({
+        url: process.env.REDISTOGO_URL,
+        ttl: 260
+      })
+    : new redisStore({
+        client: redis.createClient(),
+        ttl: 260
+      });
 };

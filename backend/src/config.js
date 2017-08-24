@@ -15,7 +15,8 @@ module.exports = () => {
         mongodb: {
           uri: process.env.MONGODB_URI
         },
-        cookie_secret: process.env.COOKIE_SECRET
+        cookie_secret: process.env.COOKIE_SECRET,
+        socket_io_uri: 'https://white-board-react.herokuapp.com/'
       };
     case DEVELOPMENT:
       return {
@@ -27,19 +28,22 @@ module.exports = () => {
         mongodb: {
           uri: require('./../../config/config.json').dev.MONGODB.URI
         },
-        cookie_secret: require('./../../config/config.json').dev.COOKIE_SECRET
+        cookie_secret: require('./../../config/config.json').dev.COOKIE_SECRET,
+        socket_io_uri: require('./../../config/config.json').dev.SOCKET_IO_URI
       };
     default:
       return {
         google: {
-          client_id: require('./../../config/config.json').dev.GOOGLE.CLIENT_ID,
-          client_secret: require('./../../config/config.json').dev.GOOGLE
+          client_id: require('./../../config/config.json').test.GOOGLE
+            .CLIENT_ID,
+          client_secret: require('./../../config/config.json').test.GOOGLE
             .CLIENT_SECRET
         },
         mongodb: {
-          uri: require('./../../config/config.json').dev.MONGODB.URI
+          uri: require('./../../config/config.json').test.MONGODB.URI
         },
-        cookie_secret: require('./../../config/config.json').dev.COOKIE_SECRET
+        cookie_secret: require('./../../config/config.json').test.COOKIE_SECRET,
+        socket_io_uri: require('./../../config/config.json').test.SOCKET_IO_URI
       };
   }
 };

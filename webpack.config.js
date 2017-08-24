@@ -2,6 +2,7 @@ const path = require('path');
 const extract = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const config = require('./backend/src/config')();
 
 const vendor = [
   'axios',
@@ -29,7 +30,7 @@ const vendor = [
   'socket.io-client'
 ];
 
-const config = {
+module.exports = {
   entry: {
     bundle: ['babel-polyfill', './frontend/src/index.jsx'],
     vendor
@@ -74,8 +75,11 @@ const config = {
     new HtmlWebpackPlugin({
       template: 'frontend/src/index.html'
     }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        REACT_APP_SOCKET_IO_URL: JSON.stringify(config.socket_io_uri)
+      }
+    }),
     new webpack.optimize.CommonsChunkPlugin({ names: ['vendor'] })
   ]
 };
-
-module.exports = config;

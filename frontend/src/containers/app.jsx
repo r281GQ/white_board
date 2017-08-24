@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
 import io from 'socket.io-client';
 
-io('http://localhost:3000');
+io(process.env.REACT_APP_SOCKET_IO_URL);
 
 const App = ({ name }) =>
   <div>

@@ -54,15 +54,14 @@ passport.use(
       clientSecret: config.google.client_secret,
       callbackURL: '/api/auth/google/callback'
     },
-    (accessToken, refreshToken, profile, done) =>{
-      console.log(profile)
+    (accessToken, refreshToken, profile, done) => {
       User.findOne({ googleAuthId: profile.id })
-      .then(
-        user =>
-        user ? done(null, user) : new User(mapToDbProps(profile)).save()
-      )
-      .then(user => done(null, user))
-      .catch(error => console.log(error))
+        .then(
+          user =>
+            user ? done(null, user) : new User(mapToDbProps(profile)).save()
+        )
+        .then(user => done(null, user))
+        .catch(error => console.log(error));
     }
   )
 );
