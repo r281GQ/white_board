@@ -26,7 +26,7 @@ const vendor = [
   'redux-immutable',
   'redux-saga',
   'reselect',
-  'socket.io-client',
+  'socket.io-client'
 ];
 
 const config = {
@@ -40,7 +40,12 @@ const config = {
     publicPath: '/'
   },
   devServer: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000'
+      }
+    }
   },
   resolve: {
     extensions: ['.js', '.jsx']

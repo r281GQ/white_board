@@ -4,6 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 
 import auth from './reducers/auth';
+import root from './sagas/root';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -13,4 +14,4 @@ export default createStore(
 );
 
 
-// sagaMiddleware.run()
+// sagaMiddleware.run(root)
