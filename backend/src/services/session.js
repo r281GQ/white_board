@@ -10,7 +10,7 @@ module.exports = app => {
   if (process.env.NODE_ENV === 'production') {
     const myURL = new URL(process.env.REDISTOGO_URL);
     store = {
-      host: myURL.host,
+      host: myURL.hostname,
       port: myURL.port,
       db: myURL.username,
       pass: myURL.password
