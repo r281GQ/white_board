@@ -17,8 +17,8 @@ module.exports = app => passport => {
     passport.authenticate('google'),
     (request, response) => {
       process.env.NODE_ENV === 'production'
-        ? res.redirect('https://white-board-react.herokuapp.com/app')
-        : res.redirect('/');
+        ? response.redirect('https://white-board-react.herokuapp.com/app')
+        : response.redirect('/');
     }
   );
 };

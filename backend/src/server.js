@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-const cookieSession = require('cookie-session');
+// const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const io = require('socket.io');
@@ -18,13 +18,9 @@ if (process.env.NODE_ENV === 'development')
     require('cors')({ credentials: true, origin: 'http://localhost:8080' })
   );
 
+require('./services/session')(app);
+
 app.use(bodyParser.json());
-app.use(
-  cookieSession({
-    maxAge: 60 * 60 * 1000,
-    keys: [config.cookie_secret]
-  })
-);
 
 app.use(passport.initialize());
 app.use(passport.session());
