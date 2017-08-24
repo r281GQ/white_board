@@ -4,6 +4,8 @@ const path = require('path');
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const io = require('socket.io');
+const http = require('http');
 
 const config = require('./config')();
 
@@ -40,4 +42,11 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
+const server = http.createServer(app);
+const socketServer = io(server);
+
+socketServer.on('connection', client => {
+  console.log(`member joind`);
+});
+
+server.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
