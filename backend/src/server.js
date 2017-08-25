@@ -25,7 +25,7 @@ require('./services/cors')(app);
 app.use(morgan('combined'))
 app.use(bodyParser.json());
 // app.use(cookieParser(config.cookie_secret))
-app.use(session({maxAge: 60*60*10000, keys: [config.cookie_secret]}))
+app.use(session({maxAge: 60*60*10000, keys: [config.cookie_secret], secure:true}))
 
 
 
