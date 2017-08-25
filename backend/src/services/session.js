@@ -47,7 +47,7 @@ app.enable('trust proxy');
     //   client: redis.createClient(),
     //   ttl: 260
     // });
-  }
+  // }
   return null;
 // console.log(sessionConfig.store);
 //   app.use(session(sessionConfig));
