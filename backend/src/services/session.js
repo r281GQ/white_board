@@ -8,12 +8,14 @@ module.exports = app => {
   let store;
 
   if (process.env.NODE_ENV === 'production') {
+    console.log(process.env.REDISTOGO_URL);
     const myURL = new URL(process.env.REDISTOGO_URL);
     store = {
       host: myURL.hostname,
       port: myURL.port,
       db: myURL.username,
-      pass: myURL.password
+      pass: myURL.password,
+      ttl: 260
     };
   } else {
     store = {
@@ -41,7 +43,7 @@ module.exports = app => {
     //   ttl: 260
     // });
   }
-
+console.log(sessionConfig.store);
   app.use(session(sessionConfig));
   return sessionConfig.store;
   // return process.env.NODE_ENV !== 'production'

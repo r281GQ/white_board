@@ -18,8 +18,8 @@ app.use(passport.session());
 
 require('./models/user')(mongoose);
 
-require('./services/passport');
 require('./services/mongoose');
+require('./services/passport');
 
 require('./routes/auth')(app)(passport);
 require('./routes/static')(app)(express);

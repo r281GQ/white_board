@@ -18,7 +18,7 @@ module.exports = app => passport => {
     (request, response) => {
       process.env.NODE_ENV === 'production'
         ? response.redirect('https://white-board-react.herokuapp.com/app')
-        : response.redirect('/');
+        : response.redirect('/app');
     }
   );
 };

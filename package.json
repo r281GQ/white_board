@@ -5,12 +5,12 @@
   "main": "backend/src/server.js",
   "scripts": {
     "test:dev": "NODE_ENV=test",
-    "build:dev": "NODE_ENV=development rimraf build && webpack -p",
+    "build:dev": "NODE_ENV=development rimraf build && webpack",
     "serve:dev": "NODE_ENV=development concurrently \" nodemon backend/src/server.js\"  \"webpack-dev-server --hot --inline\"",
     "test:prod": "",
     "build:prod": "NODE_ENV=production webpack -p",
     "serve:prod": "",
-    "start": "node backend/src/server.js"
+    "start": "NODE_ENV=production node backend/src/server.js"
   },
   "dependencies": {
     "axios": "^0.16.2",
