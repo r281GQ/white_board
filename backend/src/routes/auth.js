@@ -26,7 +26,7 @@ module.exports = app => passport => {
     '/api/auth/google/callback',
     passport.authenticate('google'),
     (request, response) => {
-      req.session.save(() => {
+      request.session.save(() => {
             res.redirect('/app');
           })
     }
