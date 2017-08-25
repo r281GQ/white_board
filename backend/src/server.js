@@ -3,9 +3,16 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 
+const cookieParser = require('cookie-parser');
+
+const config = require('./../config')();
+
+
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+
+app.use(cookieParser(config.cookie_secret))
 
 require('./services/cors')(app);
 

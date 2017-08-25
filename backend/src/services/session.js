@@ -28,14 +28,15 @@ module.exports = app => {
     cookie: {
       httpOnly: true,
       maxAge: 60 * 60 * 1000,
-      secure: false
+      secure: true,
+      path: '/'
     },
     secret: config.cookie_secret,
     store: new redisStore(store),
     saveUninitialized: false,
     resave: false
   };
-
+app.set('trust proxy', 1)
   if (process.env.NODE_ENV !== 'production') {
     sessionConfig.cookie.secure = false;
     // sessionConfig.cookie.store = new redisStore({
