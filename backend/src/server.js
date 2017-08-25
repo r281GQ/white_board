@@ -36,14 +36,14 @@ if (process.env.NODE_ENV === 'production') {
   //   pass: myURL.password,
   //   ttl: 260
   // };
-  {
+  // {
     topass = redis.auth(rtg.auth.split(':')[1]);;
     store = {
       client: topass,
       ttl: 260
     };
 
-  }
+  // }
 } else {
   // var redis = require('redis');
   // store = require('redis').createClient();
@@ -63,7 +63,7 @@ let sessionConfig = {
     path: '/'
   },
   secret: config.cookie_secret,
-  store: new redisStore(store),
+  store: new redisStore({client: topass}),
   saveUninitialized: true,
   resave: true,
   proxy: true
@@ -125,6 +125,6 @@ require('./routes/static')(app)(express);
 //   console.log(`Rest API and websockets started on port: ${PORT}`)
 // );
 
-require('./websockets/socket')(app)(new redisStore({client: topass})).listen(PORT, () =>
+require('./websockets/socket')(app)(new redisStore({ : topass})).listen(PORT, () =>
   console.log(`Rest API and websockets started on port: ${PORT}`)
 );
