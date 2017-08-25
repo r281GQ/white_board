@@ -21,7 +21,7 @@ module.exports = app => passport => {
       //   : response.redirect('/app');
         console.log(request.user)
         console.log(request.session);
-        response.status(200).send({})
+        response.status(200).send({f: request.session})
     }
   );
   //
