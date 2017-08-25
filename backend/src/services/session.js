@@ -34,7 +34,8 @@ module.exports = app => {
     secret: config.cookie_secret,
     store: new redisStore(store),
     saveUninitialized: false,
-    resave: false
+    resave: false,
+    proxy: true
   };
 app.set('trust proxy', 1)
   if (process.env.NODE_ENV !== 'production') {
