@@ -2,20 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const morgan = require('morgan')
+const morgan = require('morgan');
 //
-// const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 
 // const config = require('./config')();
-
 
 // const session = require('cookie-session')
 // const redisStore = require('connect-redis')(session);
 const config = require('./config')();
-
-
-
-
 
 const url = require('url');
 // const redis = require('redis');
@@ -29,9 +24,9 @@ let store;
 //
 if (process.env.NODE_ENV === 'production') {
   console.log(process.env.REDISTOGO_URL);
-  const rtg =   url.parse(process.env.REDISTOGO_URL)
+  const rtg = url.parse(process.env.REDISTOGO_URL);
   // const myURL = new URL(process.env.REDISTOGO_URL);
-  var redis = require("redis").createClient(rtg.port, rtg.hostname);
+  var redis = require('redis').createClient(rtg.port, rtg.hostname);
   // store = {
   //   host: myURL.hostname,
   //   port: myURL.port,
@@ -39,11 +34,14 @@ if (process.env.NODE_ENV === 'production') {
   //   pass: myURL.password,
   //   ttl: 260
   // };
-  store :{client: store = redis.auth(rtg.auth.split(":")[1])};
+  {
+    redis.auth(rtg.auth.split(':')[1]);
+  }
 } else {
-  var redis = require("redis");
+  // var redis = require('redis');
+  // store = require('redis').createClient();
   store = {
-    client: redis.createClient(),
+    client: require('redis').createClient(),
     ttl: 260
   };
 }
@@ -61,15 +59,19 @@ let sessionConfig = {
   // store: new redisStore(store),
   saveUninitialized: true,
   resave: true,
-  proxy:true
+  proxy: true
 };
 
 if (process.env.NODE_ENV !== 'production') {
   sessionConfig.cookie.secure = false;
-  sessionConfig.cookie.store = new redisStore({
-    client: redis.createClient(),
-    ttl: 260
-  });
+  sessionConfig.proxy = false;
+  sessionConfig.saveUninitialized = false;
+  sessionConfig.resave = false;
+  // store =   new redisStore({
+  //   client: redis.createClient(),
+  //   ttl: 260
+  // });
+  // sessionConfig.cookie.store = store;
 }
 // return null;
 // console.log(sessionConfig.store);
@@ -84,27 +86,15 @@ if (process.env.NODE_ENV !== 'production') {
 //       ttl: 260
 //     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.enable('trust proxy');
-// require('./services/cors')(app);
-app.use(morgan('combined'))
+require('./services/cors')(app);
+
+app.use(morgan('combined'));
 app.use(bodyParser.json());
-// app.use(cookieParser(config.cookie_secret))
+app.use(cookieParser(config.cookie_secret))
 app.use(session(sessionConfig));
 
 // app.use(session({maxAge: 60*60*10000, keys: ['sdfsdfsd'], secure:false}))
@@ -112,7 +102,6 @@ app.use(session(sessionConfig));
 console.log(app);
 
 // const store = require('./services/session')(app);
-
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -125,12 +114,10 @@ require('./services/passport');
 require('./routes/auth')(app)(passport);
 require('./routes/static')(app)(express);
 
-
-
-app.listen(PORT, () =>
-  console.log(`Rest API and websockets started on port: ${PORT}`)
-);
-
-// require('./websockets/socket')(app)(store).listen(PORT, () =>
+// app.listen(PORT, () =>
 //   console.log(`Rest API and websockets started on port: ${PORT}`)
 // );
+
+require('./websockets/socket')(app)(store.client).listen(PORT, () =>
+  console.log(`Rest API and websockets started on port: ${PORT}`)
+);

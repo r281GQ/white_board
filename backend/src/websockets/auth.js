@@ -6,15 +6,16 @@ module.exports = socketServer => store => {
 
   socketServer.use(
     passportSocketIo.authorize({
-      cookieParser,
+      // cookieParser,
       key: 'connect.sid',
       secret: config.cookie_secret,
       store,
       success: (data, accept) => {
         console.log('success');
+        console.log(data.user);
         accept(null, true);
       },
-      fail: (data, message, error, accept) => console.log('fail')
+      fail: (data, message, error, accept) => console.log(message)
     })
   );
 };

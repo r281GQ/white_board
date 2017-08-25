@@ -30,9 +30,9 @@ module.exports = app => passport => {
     '/api/auth/google/callback',
     passport.authenticate('google'),
     (request, response) => {
-      console.log(request.user)
-            console.log(request.session);
-             response.status(200).send({f: request.session})
+      console.log(request.user);
+      console.log(request.session);
+      response.status(200).send({ f: request.session });
     }
   );
 };
