@@ -24,28 +24,28 @@ const mapToDbProps = profile => ({
   picture: profile.photos[0].value
 });
 
-passport.use(
-  new LocalStrategy(
-    {
-      usernameField: 'email',
-      passwordField: 'password'
-    },
-    (email, password, done) =>
-      User.findOne({ email })
-        .then(
-          user =>
-            !user
-              ? done(null, false)
-              : bcrypt.compare(
-                  password,
-                  user.password,
-                  (err, result) =>
-                    result ? done(null, user) : done(null, false)
-                )
-        )
-        .catch(error => console.log(error))
-  )
-);
+// passport.use(
+//   new LocalStrategy(
+//     {
+//       usernameField: 'email',
+//       passwordField: 'password'
+//     },
+//     (email, password, done) =>
+//       User.findOne({ email })
+//         .then(
+//           user =>
+//             !user
+//               ? done(null, false)
+//               : bcrypt.compare(
+//                   password,
+//                   user.password,
+//                   (err, result) =>
+//                     result ? done(null, user) : done(null, false)
+//                 )
+//         )
+//         .catch(error => console.log(error))
+//   )
+// );
 
 passport.use(
   new GoogleStrategy(
