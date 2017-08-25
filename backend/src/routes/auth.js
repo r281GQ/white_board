@@ -9,32 +9,17 @@ module.exports = app => passport => {
   app.get('/api/auth/whoami', (request, response) => {
     if (!request.user)
       return response.status(401).send({ message: 'Unauthanticated!' });
-      console.log(request.session);
     return response.status(200).send(request.user);
   });
 
-  // app.get(
-  //   '/api/auth/google/callback',
-  //   passport.authenticate('google')
-  //   ,
-  //   (request, response) => {
-  //     process.env.NODE_ENV === 'production'
-  //       ? response.redirect('https://white-board-react.herokuapp.com/app')
-  //       : response.redirect('/app');
-  //   //     console.log(request.user)
-  //   //     console.log(request.session);
-  //   //     response.status(200).send({f: request.session})
-  //   }
-  // );
-  //
-  
   app.get(
     '/api/auth/google/callback',
-    passport.authenticate('google'),
+    passport.authenticate('google')
+    ,
     (request, response) => {
-      // console.log(request.user);
-      console.log(request.session);
-      response.status(200).send({ f: request.session });
+      process.env.NODE_ENV === 'production'
+        ? response.redirect('https://white-board-react.herokuapp.com/app')
+        : response.redirect('/app');
     }
   );
 };

@@ -1,64 +1,43 @@
-module.exports = app => {
-  const { URL } = require('url');
+const createRedisClient = (isProduction, redisUrl) => {
   const redis = require('redis');
-  // const session = require('express-session');
-  const session = require('cookie-parser')
-  // const redisStore = require('connect-redis')(session);
-  const config = require('./../config')();
+  if (isProduction) {
+    const rtg = require('url').parse(redisUrl);
+    const db = redis.createClient(rtg.port, rtg.hostname);
+    db.auth(rtg.auth.split(':')[1]);
+    return db;
+  } else {
+    return redis.createClient();
+  }
+};
 
-  let store;
+const createSessionConfig = (config, client, redisStore) => {
+  return {
+    cookie: {
+      httpOnly: true,
+      maxAge: 60 * 60 * 1000,
+      secure: config.session_config.cookie.secure,
+      path: '/'
+    },
+    secret: config.cookie_secret,
+    store: new redisStore({ client }),
+    saveUninitialized: config.session_config.saveUninitialized,
+    resave: config.session_config.resave,
+    proxy: config.session_config.proxy
+  };
+};
 
-  app.use(session({maxAge: 60*60*10000, keys: [config.cookie_secret]}))
-//
-  // if (process.env.NODE_ENV === 'production') {
-  //   console.log(process.env.REDISTOGO_URL);
-  //   const myURL = new URL(process.env.REDISTOGO_URL);
-  //   store = {
-  //     host: myURL.hostname,
-  //     port: myURL.port,
-  //     db: myURL.username,
-  //     pass: myURL.password,
-  //     ttl: 260
-  //   };
-  // } else {
-    // store = {
-    //   client: redis.createClient(),
-    //   ttl: 260
-    // };
-  // }
+module.exports = app => {
+  const session = require('express-session');
+  const redisStore = require('connect-redis')(session);
 
-  // let sessionConfig = {
-  //   cookie: {
-  //     httpOnly: true,
-  //     maxAge: 60 * 60 * 1000,
-  //     secure: true,
-  //     path: '/'
-  //   },
-  //   secret: config.cookie_secret,
-  //   store: new redisStore(store),
-  //   saveUninitialized: false,
-  //   resave: false,
-  //   proxy: true
-  // };
+  const client = createRedisClient(
+    process.env.NODE_ENV === 'production',
+    process.env.REDISTOGO_URL
+  );
 
-  // if (process.env.NODE_ENV !== 'production') {
-  //   sessionConfig.cookie.secure = false;
-    // sessionConfig.cookie.store = new redisStore({
-    //   client: redis.createClient(),
-    //   ttl: 260
-    // });
-  // }
-  return null;
-// console.log(sessionConfig.store);
-//   app.use(session(sessionConfig));
-  // return sessionConfig.store;
-  // return process.env.NODE_ENV !== 'production'
-  //   ? new redisStore({
-  //       url: process.env.REDISTOGO_URL,
-  //       ttl: 260
-  //     })
-  //   : new redisStore({
-  //       client: redis.createClient(),
-  //       ttl: 260
-  //     });
+  app.use(
+    session(createSessionConfig(require('./../config')(), client, redisStore))
+  );
+  
+  return client;
 };
