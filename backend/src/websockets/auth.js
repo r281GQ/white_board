@@ -4,9 +4,11 @@ module.exports = socketServer => store => {
 
   const config = require('./../config')();
 
+  // console.log(store);
+
   socketServer.use(
     passportSocketIo.authorize({
-      // cookieParser,
+      cookieParser,
       key: 'connect.sid',
       secret: config.cookie_secret,
       store,
@@ -15,7 +17,7 @@ module.exports = socketServer => store => {
         console.log(data.user);
         accept(null, true);
       },
-      fail: (data, message, error, accept) => console.log(message)
+      fail: (data, message, error, accept) => console.log(data)
     })
   );
 };

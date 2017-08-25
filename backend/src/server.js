@@ -20,6 +20,8 @@ const redisStore = require('connect-redis')(session);
 
 let store;
 
+let topass = require('redis').createClient();
+
 // app.use(session({maxAge: 60*60*10000, keys: [config.cookie_secret]}))
 //
 if (process.env.NODE_ENV === 'production') {
@@ -35,18 +37,23 @@ if (process.env.NODE_ENV === 'production') {
   //   ttl: 260
   // };
   {
-    redis.auth(rtg.auth.split(':')[1]);
+    topass = redis.auth(rtg.auth.split(':')[1]);;
+    store = {
+      client: topass,
+      ttl: 260
+    };
+
   }
 } else {
   // var redis = require('redis');
   // store = require('redis').createClient();
   store = {
-    client: require('redis').createClient(),
+    client: topass,
     ttl: 260
   };
 }
 
-console.log(store);
+// console.log(store);
 
 let sessionConfig = {
   cookie: {
@@ -56,7 +63,7 @@ let sessionConfig = {
     path: '/'
   },
   secret: config.cookie_secret,
-  // store: new redisStore(store),
+  store: new redisStore(store),
   saveUninitialized: true,
   resave: true,
   proxy: true
@@ -99,7 +106,7 @@ app.use(session(sessionConfig));
 
 // app.use(session({maxAge: 60*60*10000, keys: ['sdfsdfsd'], secure:false}))
 
-console.log(app);
+// console.log(app);
 
 // const store = require('./services/session')(app);
 
@@ -118,6 +125,6 @@ require('./routes/static')(app)(express);
 //   console.log(`Rest API and websockets started on port: ${PORT}`)
 // );
 
-require('./websockets/socket')(app)(store.client).listen(PORT, () =>
+require('./websockets/socket')(app)(new redisStore({client: topass})).listen(PORT, () =>
   console.log(`Rest API and websockets started on port: ${PORT}`)
 );
