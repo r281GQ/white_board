@@ -6,7 +6,7 @@ const morgan = require('morgan')
 
 const cookieParser = require('cookie-parser');
 
-const config = require('./config')();
+// const config = require('./config')();
 
 
 const session = require('cookie-parser')
