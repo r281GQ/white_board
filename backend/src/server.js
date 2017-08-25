@@ -54,7 +54,8 @@ let sessionConfig = {
   secret: config.cookie_secret,
   store: new redisStore(store),
   saveUninitialized: true,
-  resave: true
+  resave: true,
+  proxy:true
 };
 
 if (process.env.NODE_ENV !== 'production') {
