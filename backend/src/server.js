@@ -15,12 +15,12 @@ const config = require('./config')();
 
 let store;
 
-app.use(session({maxAge: 60*60*10000, keys: [config.cookie_secret]}))
 
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+app.use(session({maxAge: 60*60*10000, keys: [config.cookie_secret]}))
 
 app.use(morgan('combined'))
 
