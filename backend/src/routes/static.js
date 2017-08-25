@@ -6,7 +6,7 @@ module.exports = app => express => {
   } else {
     app.get('/',(req, res) => res.send({g: 'sdf'}));
   }
-  app.get('*', (request, response) => {
-    response.redirect('/');
-  });
+  // app.get('*', (request, response) => {
+  //   response.redirect('/');
+  // });
 };
