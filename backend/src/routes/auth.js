@@ -12,23 +12,24 @@ module.exports = app => passport => {
     return response.status(200).send(request.user);
   });
 
-  // app.get(
-  //   '/api/auth/google/callback',
-  //   passport.authenticate('google'),
-  //   (request, response) => {
-  //     process.env.NODE_ENV === 'production'
-  //       ? response.redirect('https://white-board-react.herokuapp.com/app')
-  //       : response.redirect('/app');
-  //   }
-  // );
-
   app.get(
     '/api/auth/google/callback',
     passport.authenticate('google'),
     (request, response) => {
-      request.session.save(() => {
-            response.redirect('/app');
-          })
+      // process.env.NODE_ENV === 'production'
+      //   ? response.redirect('https://white-board-react.herokuapp.com/app')
+      //   : response.redirect('/app');
+        response.status(200).send({})
     }
   );
+  //
+  // app.get(
+  //   '/api/auth/google/callback',
+  //   passport.authenticate('google'),
+  //   (request, response) => {
+  //     request.session.save(() => {
+  //           response.redirect('/app');
+  //         })
+  //   }
+  // );
 };
