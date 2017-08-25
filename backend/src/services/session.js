@@ -3,7 +3,7 @@ module.exports = app => {
   const redis = require('redis');
   // const session = require('express-session');
   const session = require('cookie-parser')
-  const redisStore = require('connect-redis')(session);
+  // const redisStore = require('connect-redis')(session);
   const config = require('./../config')();
 
   let store;
