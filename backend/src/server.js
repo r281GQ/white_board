@@ -125,6 +125,6 @@ require('./routes/static')(app)(express);
 //   console.log(`Rest API and websockets started on port: ${PORT}`)
 // );
 
-require('./websockets/socket')(app)(new redisStore({client : topass})).listen(PORT, () =>
+require('./websockets/socket')(app)(new redisStore({client : require('redis').createClient()})).listen(PORT, () =>
   console.log(`Rest API and websockets started on port: ${PORT}`)
 );
