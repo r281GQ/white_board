@@ -48,9 +48,10 @@ app.enable('trust proxy');
     //   ttl: 260
     // });
   }
+  return null;
 // console.log(sessionConfig.store);
 //   app.use(session(sessionConfig));
-  return sessionConfig.store;
+  // return sessionConfig.store;
   // return process.env.NODE_ENV !== 'production'
   //   ? new redisStore({
   //       url: process.env.REDISTOGO_URL,
