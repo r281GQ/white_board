@@ -10,22 +10,22 @@ module.exports = app => {
 
   // app.use(session({maxAge: 60*60*10000, keys: [config.cookie_secret]}))
 
-  if (process.env.NODE_ENV === 'production') {
-    console.log(process.env.REDISTOGO_URL);
-    const myURL = new URL(process.env.REDISTOGO_URL);
-    store = {
-      host: myURL.hostname,
-      port: myURL.port,
-      db: myURL.username,
-      pass: myURL.password,
-      ttl: 260
-    };
-  } else {
+  // if (process.env.NODE_ENV === 'production') {
+  //   console.log(process.env.REDISTOGO_URL);
+  //   const myURL = new URL(process.env.REDISTOGO_URL);
+  //   store = {
+  //     host: myURL.hostname,
+  //     port: myURL.port,
+  //     db: myURL.username,
+  //     pass: myURL.password,
+  //     ttl: 260
+  //   };
+  // } else {
     store = {
       client: redis.createClient(),
       ttl: 260
     };
-  }
+  // }
 
   let sessionConfig = {
     cookie: {
@@ -51,13 +51,13 @@ app.set('trust proxy', 1)
 console.log(sessionConfig.store);
   app.use(session(sessionConfig));
   return sessionConfig.store;
-  return process.env.NODE_ENV !== 'production'
-    ? new redisStore({
-        url: process.env.REDISTOGO_URL,
-        ttl: 260
-      })
-    : new redisStore({
-        client: redis.createClient(),
-        ttl: 260
-      });
+  // return process.env.NODE_ENV !== 'production'
+  //   ? new redisStore({
+  //       url: process.env.REDISTOGO_URL,
+  //       ttl: 260
+  //     })
+  //   : new redisStore({
+  //       client: redis.createClient(),
+  //       ttl: 260
+  //     });
 };
