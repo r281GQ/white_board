@@ -52,7 +52,7 @@ let sessionConfig = {
     path: '/'
   },
   secret: config.cookie_secret,
-  store: new redisStore(store),
+  // store: new redisStore(store),
   saveUninitialized: true,
   resave: true,
   proxy:true
