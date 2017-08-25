@@ -39,7 +39,7 @@ module.exports = app => {
   //   saveUninitialized: false,
   //   resave: false,
   //   proxy: true
-  };
+  // };
 app.enable('trust proxy');
   // if (process.env.NODE_ENV !== 'production') {
   //   sessionConfig.cookie.secure = false;
