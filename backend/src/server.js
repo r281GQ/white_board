@@ -17,8 +17,8 @@ const config = require('./config')();
 
 
 
-const { URL } = require('url');
-const redis = require('redis');
+const url = require('url');
+// const redis = require('redis');
 const session = require('express-session');
 const redisStore = require('connect-redis')(session);
 // const config = require('./../config')();
@@ -29,15 +29,19 @@ let store;
 //
 if (process.env.NODE_ENV === 'production') {
   console.log(process.env.REDISTOGO_URL);
-  const myURL = new URL(process.env.REDISTOGO_URL);
-  store = {
-    host: myURL.hostname,
-    port: myURL.port,
-    db: myURL.username,
-    pass: myURL.password,
-    ttl: 260
-  };
+  const rtg =   url.parse(process.env.REDISTOGO_URL)
+  // const myURL = new URL(process.env.REDISTOGO_URL);
+  var redis = require("redis").createClient(rtg.port, rtg.hostname);
+  // store = {
+  //   host: myURL.hostname,
+  //   port: myURL.port,
+  //   db: myURL.username,
+  //   pass: myURL.password,
+  //   ttl: 260
+  // };
+  store :{client: store = redis.auth(rtg.auth.split(":")[1])};
 } else {
+  var redis = require("redis");
   store = {
     client: redis.createClient(),
     ttl: 260
