@@ -36,7 +36,7 @@ module.exports = app => {
     },
     secret: config.cookie_secret,
     store: new redisStore(store),
-    saveUninitialized: false,
+    saveUninitialized: true,
     resave: true,
     proxy: true
   };
