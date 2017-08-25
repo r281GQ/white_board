@@ -40,7 +40,7 @@ module.exports = app => {
   //   resave: false,
   //   proxy: true
   // };
-app.enable('trust proxy');
+
   // if (process.env.NODE_ENV !== 'production') {
   //   sessionConfig.cookie.secure = false;
     // sessionConfig.cookie.store = new redisStore({

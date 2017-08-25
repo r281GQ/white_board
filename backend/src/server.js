@@ -20,6 +20,7 @@ let store;
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+app.enable('trust proxy');
 require('./services/cors')(app);
 app.use(morgan('combined'))
 app.use(bodyParser.json());
