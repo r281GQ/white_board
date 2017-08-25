@@ -31,6 +31,10 @@ require('./services/passport');
 require('./routes/auth')(app)(passport);
 require('./routes/static')(app)(express);
 
-require('./websockets/socket')(app)(store).listen(PORT, () =>
+app.listen(PORT, () =>
   console.log(`Rest API and websockets started on port: ${PORT}`)
 );
+
+// require('./websockets/socket')(app)(store).listen(PORT, () =>
+//   console.log(`Rest API and websockets started on port: ${PORT}`)
+// );
