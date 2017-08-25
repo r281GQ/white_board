@@ -27,7 +27,7 @@ module.exports = app => passport => {
     passport.authenticate('google'),
     (request, response) => {
       request.session.save(() => {
-            res.redirect('/app');
+            response.redirect('/app');
           })
     }
   );
