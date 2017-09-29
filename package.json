@@ -4,7 +4,7 @@
   "description": "white board project manager",
   "main": "backend/src/server.js",
   "scripts": {
-    "test:dev": "NODE_ENV=test",
+    "test:dev": "NODE_ENV=test jest --watchAll backend/test",
     "build:dev": "NODE_ENV=development rimraf build && webpack",
     "serve:dev": "NODE_ENV=development concurrently \" nodemon backend/src/server.js\"  \"webpack-dev-server --hot --inline\"",
     "test:prod": "",
@@ -22,6 +22,7 @@
     "cors": "^2.8.4",
     "express": "^4.15.3",
     "express-session": "^1.15.5",
+    "express-validator": "^4.2.1",
     "immutable": "^3.8.1",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
@@ -57,7 +58,8 @@
   "jest": {
     "snapshotSerializers": [
       "<rootDir>/node_modules/enzyme-to-json/serializer"
-    ]
+    ],
+    "testEnvironment": "node"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",

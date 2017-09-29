@@ -36,13 +36,13 @@ module.exports = mongoose => {
   userSchema.pre('save', function(next) {
     if(!this.googleAuthId)
       this.isNew || isModified('password')
-        ? bcrypt.hash(this.password, 10, (err, hash) => {
-            if (err) next(err);
+        ? bcrypt.hash(this.password, 10, (error, hash) => {
+            if (error) next(error);
             this.password = hash;
             next();
           })
         : next();
-    next();
+    else next();
   });
 
   mongoose.model('User', userSchema);
