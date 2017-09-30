@@ -1,0 +1,2 @@
+export const WRITE_MESSAGE = 'WRITE_MESSAGE';
+export const WRITE_MESSAGES = 'WRITE_MESSAGES';

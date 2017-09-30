@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 require('./../../src/services/mongoose');
 require('./../../src/models/user')(mongoose);
 require('./../../src/models/chat_group')(mongoose);
-const {writeMessage, seenBy} = require('./../../src/services/chat_group');
+const { writeMessage, seenBy } = require('./../../src/services/chat_group');
+
 const ChatGroup = mongoose.model('ChatGroup');
 const User = mongoose.model('User');
 describe('description', () => {
@@ -22,26 +23,27 @@ describe('description', () => {
     await User.findOneAndRemove({});
   });
 
-  it('description', async() => {
-    const instance =  new ChatGroup({
+  it('description', async () => {
+    const instance = new ChatGroup({
       name: 'chat'
-
     });
-    instance.participiants.push(user)
-    await instance.save()
+    instance.participiants.push(user);
+    await instance.save();
 
+    const f = await writeMessage({
+      message: {
+        sender: user,
+        text: 'ele',
+        createdAt: Date.now()
+      },
+      group: instance
+    });
 
-  
-
-
-    const f = await writeMessage({message: {
-      sender: user,
-      text: 'ele',
-      createdAt: Date.now()
-    }, group: instance});
-
-    const s = await seenBy({message: f.messages[0]._id, user: user,chatGroup: f._id});
+    const s = await seenBy({
+      message: f.messages[0]._id,
+      user: user,
+      chatGroup: f._id
+    });
     console.log(s);
   });
-
 });
