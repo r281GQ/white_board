@@ -6,6 +6,18 @@ module.exports = app => passport => {
     })
   );
 
+  app.post(
+    '/api/auth/local/login',
+    passport.authenticate('local', { failureRedirect: '/api/auth/failure' }),
+    (request, response) => {
+      response.status(200).send({ message: 'Authanticated!' });
+    }
+  );
+
+  app.get('/api/auth/failure', (request, response) => {
+    response.status(401).send({ error: 'Invalid credentials!' });
+  });
+
   app.get('/api/auth/whoami', (request, response) => {
     if (!request.user)
       return response.status(401).send({ message: 'Unauthanticated!' });
@@ -14,8 +26,7 @@ module.exports = app => passport => {
 
   app.get(
     '/api/auth/google/callback',
-    passport.authenticate('google')
-    ,
+    passport.authenticate('google'),
     (request, response) => {
       process.env.NODE_ENV === 'production'
         ? response.redirect('https://white-board-react.herokuapp.com/app')
