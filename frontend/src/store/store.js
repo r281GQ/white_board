@@ -1,17 +1,15 @@
 import { createStore, applyMiddleware } from 'redux';
 import { combineReducers } from 'redux-immutable';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import createSagaMiddleware from 'redux-saga';
-
+import thunk from 'redux-thunk';
+import socketMiddleware from './middleware/socket';
 import auth from './reducers/auth';
-import root from './sagas/root';
-
-const sagaMiddleware = createSagaMiddleware();
+import chat from './reducers/chat';
+import { router, routerMiddlewareInstance } from './reducers/router';
 
 export default createStore(
-  combineReducers({ auth }),
-  composeWithDevTools(applyMiddleware(sagaMiddleware))
+  combineReducers({ auth, chat, router }),
+  composeWithDevTools(
+    applyMiddleware(thunk, routerMiddlewareInstance, socketMiddleware())
+  )
 );
-
-
-// sagaMiddleware.run(root)

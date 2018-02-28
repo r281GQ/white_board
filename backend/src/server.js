@@ -27,6 +27,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./models/user')(mongoose);
+require('./models/chat_group')(mongoose);
 
 require('./services/mongoose');
 require('./services/passport');

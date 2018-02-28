@@ -1,24 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-// import ImmutablePropTypes from 'react-immutable-proptypes';
-import io from 'socket.io-client';
+import Login from './login';
+import Chat from './chat';
 
-io(process.env.REACT_APP_SOCKET_IO_URL);
-
-const App = ({ name }) =>
+const App = () => (
   <div>
-    Works + {name}
-  </div>;
+    <Login />
+    <Chat />
+  </div>
+);
 
-App.propTypes = {
-  name: PropTypes.string
-};
+App.propTypes = {};
 
-const mapStateToProps = state => {
-  return {
-    name: state.getIn(['auth', 'name'])
-  };
-};
-
-export default connect(mapStateToProps)(App);
+export default App;
