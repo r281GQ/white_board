@@ -1,7 +1,7 @@
 import * as chat from '../actions/chat';
 
-export const f = '';
+export const dummy = '';
 
 export const writeMessage = msg => {
-  return { type: 'SEND_CHAT_MESSAGE', payload: msg };
+  return { type: chat.SEND_CHAT_MESSAGE, payload: msg };
 };

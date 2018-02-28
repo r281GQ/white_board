@@ -11,7 +11,7 @@ module.exports = socketServer => store => {
       secret: config.cookie_secret,
       store,
       success: (data, accept) => {
-        console.log('success');
+        console.log('successfully joined');
         console.log(data.user);
         accept(null, true);
       },

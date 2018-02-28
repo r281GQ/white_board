@@ -10,9 +10,7 @@ export const login = loginInformation => async dispatch => {
     );
     dispatch({ type: auth.LOGIN_SUCCESS, payload: loginInfo });
     dispatch({ type: socket.CONNECT });
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 };
 
 export const logout = () => dispatch => {
